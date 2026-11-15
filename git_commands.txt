@@ -1,0 +1,138 @@
+GIT COMMANDS USED IN THIS ASSIGNMENT
+Name: Saptak Banerjee | ID: 2024eb02440
+Repository: https://github.com/Saptak-cyber/sdp-git-workflow-assignment
+==========================================================================
+
+STEP 1: LOCAL REPOSITORY SETUP
+--------------------------------------------------------------------------
+git init -b main
+    Creates a new, empty Git repository in the current folder (a hidden .git
+    directory) and names the first branch "main".
+
+git status
+    Shows the state of the working directory and staging area: which files are
+    untracked, modified, or staged for the next commit.
+
+STEP 2: GIT WORKFLOW EXECUTION
+--------------------------------------------------------------------------
+git add index.html about.html
+    Stages the named files, i.e. adds their current content to the staging
+    area so it is included in the next commit.
+
+git commit -m "Initial commit: add index.html and about.html"
+    Records the staged changes as a new commit in the repository history,
+    with the given message describing the change.
+
+git diff
+    Shows the line-by-line differences between the working directory and the
+    staging area (unstaged changes), used here to review the edit to index.html.
+
+git commit -m "Update index.html: add site description"
+    Creates the second commit containing the modification to index.html.
+
+git branch feature
+    Creates a new branch named "feature" pointing at the current commit,
+    without switching to it.
+
+git branch
+    Lists all local branches; the current branch is marked with an asterisk.
+
+git checkout feature
+    Switches the working directory to the "feature" branch so that new
+    commits are recorded on that branch.
+
+git commit -m "Add contact section to about.html (feature branch)"
+    Commits the change to about.html on the feature branch only; main is
+    not affected.
+
+git log --oneline --graph --all
+    Shows the history of all branches, one line per commit, with an ASCII
+    graph of how branches relate.
+
+git checkout main
+    Switches back to the main branch (the about.html change is not visible
+    here until the merge).
+
+git merge --no-ff feature -m "Merge branch 'feature' into main"
+    Merges the feature branch into main. --no-ff forces a merge commit, so the
+    history permanently shows that the work came from a separate branch.
+
+git log --oneline --graph --all --decorate
+    Shows the full commit history as a graph, with branch names (HEAD, main,
+    feature) labelled next to the commits they point to.
+
+git log --stat
+    Shows the detailed history (hash, author, date, message) along with which
+    files changed and how many lines were added or removed in each commit.
+
+STEP 3: .gitignore IMPLEMENTATION
+--------------------------------------------------------------------------
+git status --ignored
+    Like git status, but also lists files that Git is ignoring; used to prove
+    that debug.log and the temp/ folder are ignored by .gitignore.
+
+git add .gitignore
+    Stages the .gitignore file so the ignore rules are shared with everyone
+    who clones the repository.
+
+git commit -m "Add .gitignore to ignore *.log files and temp/ folder"
+    Commits the .gitignore file (rules: *.log and temp/).
+
+STEP 4: UNDO OPERATION
+--------------------------------------------------------------------------
+git commit -m "Add temporary footer comment to index.html"
+    The additional commit that is undone in the next step.
+
+git log --oneline -3
+    Shows only the three most recent commits, to show the state before undo.
+
+git revert --no-edit HEAD
+    Undoes the last commit by creating a new commit that applies the exact
+    opposite changes. History is not rewritten, so it is safe for commits that
+    are (or will be) pushed, and the undo is visible on GitHub.
+    --no-edit accepts the default commit message.
+
+git show --stat HEAD
+    Shows the details of the latest commit (the revert) and the files it
+    changed, confirming the footer line was removed.
+
+STEP 5: GITHUB INTEGRATION
+--------------------------------------------------------------------------
+gh repo create sdp-git-workflow-assignment --public
+    (GitHub CLI, not core Git.) Creates a new, empty public repository on
+    GitHub. This was done only after all local work, as the task requires.
+
+git remote add origin https://github.com/Saptak-cyber/sdp-git-workflow-assignment.git
+    Connects the local repository to the GitHub repository, saving its URL
+    under the short name "origin".
+
+git remote -v
+    Lists the configured remotes and their fetch/push URLs, to verify the
+    connection.
+
+git push -u origin main
+    Uploads the main branch and its full history to GitHub. -u sets
+    origin/main as the upstream, so later "git push" needs no arguments.
+
+git push origin feature
+    Uploads the feature branch to GitHub so the branch activity is also
+    visible on the remote.
+
+git branch -a
+    Lists both local branches and remote-tracking branches (remotes/origin/*),
+    confirming both branches exist on GitHub.
+
+STEP 6: COMMAND DOCUMENTATION FILE
+--------------------------------------------------------------------------
+git add git_commands.txt
+    Stages this documentation file.
+
+git commit -m "Add git_commands.txt documenting all commands used"
+    Commits this documentation file to the repository.
+
+git push
+    Pushes the new commit to origin/main (uses the upstream set earlier).
+
+git log --oneline --graph --all --decorate
+    Final check of the complete history, including origin/main and
+    origin/feature, to confirm GitHub matches the local repository.
